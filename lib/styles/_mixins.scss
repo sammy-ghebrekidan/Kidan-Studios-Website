@@ -1,0 +1,186 @@
+@use 'tokens' as *;
+
+// ─── Layout ──────────────────────────────────────────────
+
+@mixin wrap {
+  max-width: $max-width;
+  margin-inline: auto;
+  padding-inline: $pad;
+}
+
+@mixin section-padding {
+  padding-block: $sec;
+}
+
+// ─── Surfaces ────────────────────────────────────────────
+
+@mixin card-surface {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+@mixin card-hover {
+  transition: border-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    border-color: var(--line-hi);
+    transform: translateY(-2px);
+  }
+}
+
+@mixin glass-surface {
+  background: var(--veil);
+  backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--line);
+}
+
+// ─── Typography ──────────────────────────────────────────
+
+@mixin heading-display {
+  font-size: $t-display;
+  line-height: 0.9;
+  font-weight: 700;
+  letter-spacing: $tr-display;
+  text-transform: lowercase;
+  color: var(--fg);
+}
+
+@mixin heading-h2 {
+  font-size: $t-h2;
+  line-height: 0.95;
+  font-weight: 700;
+  letter-spacing: $tr-display;
+  text-transform: lowercase;
+  color: var(--fg);
+}
+
+@mixin heading-h3 {
+  font-size: $t-lg;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: $tr-ui;
+  text-transform: lowercase;
+  color: var(--fg-max);
+}
+
+@mixin text-lede {
+  font-size: clamp(19px, 2.1vw, 32px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: $tr-display;
+  color: var(--fg);
+  max-width: 42ch;
+}
+
+@mixin text-lede-sm {
+  font-size: $t-lg;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: $tr-ui;
+  color: var(--fg);
+  max-width: 40ch;
+}
+
+@mixin text-eyebrow {
+  font-size: $t-base;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: $tr-ui;
+  text-transform: lowercase;
+  color: var(--fg-3);
+}
+
+@mixin text-body {
+  font-size: $t-base;
+  line-height: 1.7;
+  font-weight: 400;
+  letter-spacing: $tr-ui;
+  color: var(--fg-2);
+}
+
+@mixin text-small {
+  font-size: $t-sm;
+  letter-spacing: $tr-label;
+  text-transform: lowercase;
+  color: var(--fg-3);
+}
+
+// ─── Buttons ─────────────────────────────────────────────
+
+@mixin btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, #f4f4f2 0%, #d8d8d4 45%, #f0f0ee 100%);
+  color: var(--on-fg);
+  font-size: $t-base;
+  font-weight: 500;
+  letter-spacing: $tr-ui;
+  text-transform: lowercase;
+  padding: 9px 18px;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 2px 8px rgba(0, 0, 0, 0.35);
+  transition: filter 0.18s ease, transform 0.12s ease;
+
+  &:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    filter: brightness(0.98);
+  }
+}
+
+@mixin btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--fg);
+  font-size: $t-base;
+  font-weight: 500;
+  letter-spacing: $tr-ui;
+  text-transform: lowercase;
+  padding: 9px 18px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  transition: border-color 0.18s ease;
+
+  &:hover {
+    border-color: var(--fg);
+  }
+}
+
+// ─── Utility ─────────────────────────────────────────────
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin grid-responsive($cols-mobile: 1, $cols-desktop: 3) {
+  display: grid;
+  grid-template-columns: repeat($cols-mobile, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+
+  @media (min-width: $bp-lg) {
+    grid-template-columns: repeat($cols-desktop, minmax(0, 1fr));
+  }
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

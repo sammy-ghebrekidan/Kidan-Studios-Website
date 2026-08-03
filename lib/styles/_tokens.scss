@@ -1,0 +1,44 @@
+// ─── Design tokens ───────────────────────────────────────
+// Single source of truth for all visual constants.
+// These mirror the CSS custom properties in globals.css
+// but are available at compile time for SCSS logic.
+
+// Colours
+$bg: #141414;
+$bg-2: #1a1a19;
+$bg-3: #222221;
+$line: #2c2c2a;
+$line-hi: #46443f;
+$fg: #ece8df;
+$fg-hi: #f6f4f0;
+$fg-2: #b7b3aa;
+$fg-3: #83807a;
+$fg-max: #fff;
+$on-fg: #111;
+$brand: #008060;
+$brand-soft: #5fcf9e;
+
+// Typography scale
+$t-display: clamp(42px, 7.6vw, 120px);
+$t-h2: clamp(28px, 3.9vw, 56px);
+$t-h3: clamp(20px, 1.9vw, 29px);
+$t-lg: clamp(17px, 1.35vw, 20px);
+$t-md: 16px;
+$t-base: 15px;
+$t-sm: 14px;
+
+// Tracking
+$tr-display: -0.035em;
+$tr-head: -0.018em;
+$tr-ui: -0.004em;
+$tr-label: 0.05em;
+
+// Layout
+$max-width: 1340px;
+$pad: clamp(20px, 3.2vw, 48px);
+$sec: clamp(46px, 5.2vw, 80px);
+
+// Breakpoints
+$bp-md: 768px;
+$bp-lg: 900px;
+$bp-xl: 1080px;
