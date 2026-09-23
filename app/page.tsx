@@ -1,13 +1,66 @@
 import Link from 'next/link'
 import { Ticker, Marquee, Prompt, WorkRow } from '@/components'
-import { hero, trustBar, workSection, servicesSection, blogSection, closingCta } from '@/content/home'
-import { projects } from '@/lib/data/projects'
-import { posts } from '@/lib/data/posts'
+import { client, homeContentQuery, projectsQuery, blogPostsQuery, urlFor } from '@/lib/sanity'
+import type { HomeContent, Project, BlogPost } from '@/lib/sanity'
 
-const coffeeProject = projects['kidan-coffee']
-const cyclesProject = projects['eco-cycles']
+function formatDate(dateString: string): string {
+  const date = new Date(dateString)
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toLowerCase()
+}
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [homeContent, projects, posts] = await Promise.all([
+    client.fetch<HomeContent>(homeContentQuery),
+    client.fetch<Project[]>(projectsQuery),
+    client.fetch<BlogPost[]>(blogPostsQuery),
+  ])
+
+  // Use fallback content if Sanity data isn't available yet
+  const hero = homeContent?.hero || {
+    eyebrow: 'shopify studio · london',
+    title: 'Kidan\nStudios',
+    lede: 'London-based Shopify development studio specialising in custom Shopify themes and performance optimisation.',
+    status: 'available for new projects — august 2026',
+    cta: { label: 'start a project', href: '/contact' },
+    ctaSecondary: { label: 'see the work', href: '/work' },
+  }
+
+  const trustBar = homeContent?.trustBar || [
+    { icon: 'i-globe', label: 'based in', value: 'london, uk' },
+    { icon: 'i-store', label: 'works with', value: 'shopify & shopify plus' },
+    { icon: 'i-bolt', label: 'replies within', value: '24 hours' },
+    { icon: 'i-box', label: 'typical build', value: '3–6 weeks' },
+  ]
+
+  const workSection = homeContent?.workSection || {
+    title: 'selected work',
+    subtitle: 'shopify builds for brands that sell something they care about.',
+    cta: { label: 'all projects', href: '/work' },
+  }
+
+  const servicesSection = homeContent?.servicesSection || {
+    title: 'services',
+    subtitle: 'three things, done properly — and priced before you commit.',
+    cta: { label: 'see pricing', href: '/services' },
+  }
+
+  const blogSection = homeContent?.blogSection || {
+    title: 'blog',
+    subtitle: 'ideas for better shopify stores',
+    cta: { label: 'all articles', href: '/blog' },
+  }
+
+  const closingCta = homeContent?.closingCta || {
+    heading: 'thinking about a rebuild, a migration, or just a store that loads faster?',
+    subtext: "tell me what's not working. you'll get an honest read on whether it's worth fixing — no pitch deck, no retainer talk.",
+  }
+
+  // Map project slugs to display names
+  const projectDisplayMap: Record<string, 'coffee' | 'cycles'> = {
+    'kidan-coffee': 'coffee',
+    'eco-cycles': 'cycles',
+  }
+
   return (
     <main>
       <div className="herostage">
@@ -58,28 +111,35 @@ export default function HomePage() {
         </div>
         <div className="tabs" role="group" aria-label="Filter projects" data-tabs="work">
           <button type="button" data-filter="all" aria-pressed="true">all work</button>
-          <button type="button" data-filter="coffee" aria-pressed="false">kidan coffee</button>
-          <button type="button" data-filter="cycles" aria-pressed="false">eco cycles</button>
+          {projects.map((project) => (
+            <button key={project._id} type="button" data-filter={projectDisplayMap[project.slug.current] || 'coffee'} aria-pressed="false">
+              {project.title.toLowerCase()}
+            </button>
+          ))}
         </div>
         <div className="workrows compact" style={{ marginTop: 'clamp(34px,4vw,54px)' }}>
-          <WorkRow
-            project="coffee"
-            index="01"
-            title={coffeeProject.title.toLowerCase()}
-            description={coffeeProject.description.toLowerCase()}
-            tags={['shopify', 'custom theme', 'liquid', 'cro', 'seo']}
-            images={coffeeProject.otherProject.images.length ? coffeeProject.shots.slice(0, 4).map(s => ({ src: s.src, alt: s.alt, width: s.width, height: s.height })) : []}
-            linkGo="proj-coffee"
-          />
-          <WorkRow
-            project="cycles"
-            index="02"
-            title={cyclesProject.title.toLowerCase()}
-            description={cyclesProject.description.toLowerCase()}
-            tags={['shopify', 'custom sections', 'collections', 'reviews', 'performance']}
-            images={cyclesProject.shots.slice(0, 4).map(s => ({ src: s.src, alt: s.alt, width: s.width, height: s.height }))}
-            linkGo="proj-cycles"
-          />
+          {projects.map((project, idx) => {
+            const projectType = projectDisplayMap[project.slug.current] || 'coffee'
+            const heroImageUrl = urlFor(project.heroImage).width(1900).url()
+            
+            return (
+              <WorkRow
+                key={project._id}
+                project={projectType}
+                index={String(idx + 1).padStart(2, '0')}
+                title={project.title.toLowerCase()}
+                description={project.description.toLowerCase()}
+                tags={['shopify', 'custom theme', 'liquid', 'cro', 'seo']}
+                images={[{ 
+                  src: heroImageUrl, 
+                  alt: project.title, 
+                  width: 1900, 
+                  height: 1165 
+                }]}
+                linkGo={project.slug.current}
+              />
+            )
+          })}
         </div>
       </section>
 
@@ -117,14 +177,23 @@ export default function HomePage() {
           <Link className="btn ghost" href={blogSection.cta.href}>{blogSection.cta.label}</Link>
         </div>
         <div className="postlist">
-          {Object.values(posts).map((post, i) => (
-            <Link key={post.slug} className="prow" href={`/blog/${post.slug}`}>
+          {posts.map((post, i) => (
+            <Link key={post._id} className="prow" href={`/blog/${post.slug.current}`}>
               <span className="pnum">{String(i + 1).padStart(2, '0')}</span>
               <div className="ptxt">
-                <span className="pcat">{post.category.toLowerCase()} <em aria-hidden="true">·</em> {post.readTime} <em aria-hidden="true">·</em> {post.dateFormatted.toLowerCase()}</span>
+                <span className="pcat">{post.category.toLowerCase()} <em aria-hidden="true">·</em> {post.readTime} <em aria-hidden="true">·</em> {formatDate(post.publishedAt)}</span>
                 <h3 className="ptitle">{post.title}</h3>
               </div>
-              <span className="psmall"><img width={post.image.width} height={post.image.height} decoding="async" loading="lazy" src={post.image.src} alt="" /></span>
+              <span className="psmall">
+                <img 
+                  width="400" 
+                  height="380" 
+                  decoding="async" 
+                  loading="lazy" 
+                  src={urlFor(post.image).width(400).height(380).url()} 
+                  alt="" 
+                />
+              </span>
               <span className="parrow" aria-hidden="true">↗</span>
             </Link>
           ))}

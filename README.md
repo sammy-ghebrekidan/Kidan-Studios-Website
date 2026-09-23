@@ -1,6 +1,6 @@
 # Kidan Studios
 
-Shopify development studio portfolio — Next.js 15, React 18, TypeScript, GSAP.
+Shopify development studio portfolio — Next.js 15, React 18, TypeScript, GSAP, Sanity CMS.
 
 This is a direct port of the design preview: exact CSS, exact copy, exact layout,
 exact GSAP scroll animations. Nothing was redesigned or simplified.
@@ -13,6 +13,22 @@ npm run dev
 ```
 
 Open http://localhost:3000
+
+## Content Management
+
+This site now uses **Sanity CMS** for all content management (projects, blog posts, images).
+
+**To set up Sanity and add your content:** See [SANITY_SETUP.md](./SANITY_SETUP.md) for complete instructions.
+
+**Quick start for Sanity Studio:**
+```bash
+cd studio
+npm install
+npx sanity init
+npm run dev
+```
+
+Open http://localhost:3333 to manage content.
 
 ## Stack
 
