@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Prompt } from '@/components'
+import ShotGallery from './ShotGallery'
 import type { Project } from '@/lib/types'
 
 const ProjectCaseStudy = ({ project }: { project: Project }) => {
@@ -57,14 +58,7 @@ const ProjectCaseStudy = ({ project }: { project: Project }) => {
       </section>
 
       <section className="wrap" style={{ paddingBottom: 'clamp(56px,7vw,90px)' }}>
-        <div className="shotstack">
-          {project.shots.map((shot, i) => (
-            <figure className="shot" key={i}>
-              <img width={shot.width} height={shot.height} decoding="async" loading="lazy" src={shot.src} alt={shot.alt} />
-              <figcaption>{shot.caption}</figcaption>
-            </figure>
-          ))}
-        </div>
+        <ShotGallery shots={project.shots} />
       </section>
 
       <Prompt heading="building something similar?" subtext="fixed quote within two working days, and an honest answer on whether it's worth doing at all." />
