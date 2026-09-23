@@ -123,6 +123,13 @@ export default defineType({
               title: 'Caption',
               type: 'string',
             },
+            {
+              name: 'tall',
+              title: 'Full-page screenshot',
+              type: 'boolean',
+              description: 'Enable auto-scroll on hover for tall full-page screenshots',
+              initialValue: false,
+            },
           ],
           preview: {
             select: {

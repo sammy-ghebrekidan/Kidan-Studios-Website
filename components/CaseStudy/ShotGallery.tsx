@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 
 interface Shot {
   src: string
   alt: string
   caption?: string
+  tall?: boolean // true for full-page screenshots
 }
 
 interface ShotGalleryProps {
@@ -13,76 +14,77 @@ interface ShotGalleryProps {
 }
 
 export default function ShotGallery({ shots }: ShotGalleryProps) {
-  const galleryRef = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(0)
+  const imgRef = useRef<HTMLImageElement>(null)
 
-  useEffect(() => {
-    // GSAP scroll reveal — each shot fades + slides up as it enters viewport
-    if (typeof window === 'undefined') return
-    const gsap = (window as any).gsap
-    const ScrollTrigger = (window as any).ScrollTrigger
-    if (!gsap || !ScrollTrigger) return
+  if (!shots.length) return null
 
-    const items = galleryRef.current?.querySelectorAll('.sg-item')
-    if (!items) return
+  const current = shots[active]
+  const isTall = current.tall
 
-    items.forEach((item) => {
-      const img = item.querySelector('.sg-img')
-      const caption = item.querySelector('.sg-caption')
+  function handleMouseEnter() {
+    if (!isTall || !imgRef.current) return
+    const img = imgRef.current
+    const container = img.parentElement as HTMLElement
+    // how far we need to scroll: image height minus the visible container height
+    const scrollDist = img.naturalHeight - container.offsetHeight
+    if (scrollDist <= 0) return
+    img.style.transition = `transform ${Math.max(3, scrollDist / 80)}s linear`
+    img.style.transform = `translateY(-${scrollDist}px)`
+  }
 
-      gsap.fromTo(img,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.9,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: item,
-            start: 'top 82%',
-            toggleActions: 'play none none none',
-          }
-        }
-      )
-
-      if (caption) {
-        gsap.fromTo(caption,
-          { opacity: 0, y: 16 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            delay: 0.15,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: item,
-              start: 'top 82%',
-              toggleActions: 'play none none none',
-            }
-          }
-        )
-      }
-    })
-  }, [shots])
+  function handleMouseLeave() {
+    if (!isTall || !imgRef.current) return
+    const img = imgRef.current
+    img.style.transition = 'transform 0.6s ease'
+    img.style.transform = 'translateY(0)'
+  }
 
   return (
-    <div className="sg-gallery" ref={galleryRef}>
-      {shots.map((shot, i) => (
-        <div className="sg-item" key={i} data-index={i}>
-          <div className="sg-img-wrap">
-            <img
-              className="sg-img"
-              src={shot.src}
-              alt={shot.alt}
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-          <div className="sg-caption">
-            <span className="sg-num">0{i + 1}</span>
-            {shot.caption && <p>{shot.caption}</p>}
-          </div>
+    <div className="sg">
+      {/* Main image */}
+      <div
+        className={isTall ? 'sg-main sg-main--tall' : 'sg-main'}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <img
+          ref={imgRef}
+          key={active}
+          src={current.src}
+          alt={current.alt}
+          loading="lazy"
+          decoding="async"
+        />
+        {isTall && (
+          <span className="sg-scroll-hint" aria-hidden="true">
+            hover to scroll
+          </span>
+        )}
+      </div>
+
+      {current.caption && (
+        <p className="sg-caption">{current.caption}</p>
+      )}
+
+      {/* Thumbnail strip */}
+      {shots.length > 1 && (
+        <div className="sg-thumbs" role="tablist" aria-label="Project screenshots">
+          {shots.map((shot, i) => (
+            <button
+              key={i}
+              role="tab"
+              aria-selected={i === active}
+              aria-label={shot.caption || `Screenshot ${i + 1}`}
+              className={i === active ? 'sg-thumb on' : 'sg-thumb'}
+              onClick={() => setActive(i)}
+            >
+              <img src={shot.src} alt="" aria-hidden="true" />
+              {shot.tall && <span className="sg-thumb-badge" aria-hidden="true">↕</span>}
+            </button>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   )
 }

@@ -40,8 +40,9 @@ export default async function ProjectPage({ params }: Props) {
       src: urlFor(shot.image).width(2000).url(),
       alt: shot.alt,
       width: 2000,
-      height: Math.round(2000 * 0.75), // approximate aspect ratio
+      height: Math.round(2000 * 0.75),
       caption: shot.caption || '',
+      tall: shot.tall || false,
     })) || [],
     otherProject: {
       slug: sanityProject.otherProject?.project?.slug.current || '',

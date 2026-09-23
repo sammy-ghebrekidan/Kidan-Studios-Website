@@ -7,6 +7,7 @@ export interface ProjectImage {
 
 export interface ProjectShot extends ProjectImage {
   caption: string
+  tall?: boolean
 }
 
 export interface Project {

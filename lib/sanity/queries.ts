@@ -30,7 +30,8 @@ export const projectBySlugQuery = groq`
     shots[] {
       image,
       alt,
-      caption
+      caption,
+      tall
     },
     otherProject {
       project->{

@@ -31,6 +31,7 @@ export interface Project {
     image: SanityImage
     alt: string
     caption?: string
+    tall?: boolean
   }>
   otherProject?: {
     project: {
