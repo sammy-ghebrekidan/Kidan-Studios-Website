@@ -33,6 +33,7 @@ export default async function ProjectPage({ params }: Props) {
     year: sanityProject.year,
     role: sanityProject.role,
     status: sanityProject.status,
+    url: sanityProject.url,
     brief: portableTextToPlainText(sanityProject.brief || []),
     approach: portableTextToPlainText(sanityProject.approach || []),
     builtList: sanityProject.builtList?.map(item => item.items) || [],

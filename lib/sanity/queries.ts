@@ -24,6 +24,7 @@ export const projectBySlugQuery = groq`
     year,
     role,
     status,
+    url,
     brief,
     approach,
     builtList,

@@ -45,6 +45,12 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'url',
+      title: 'Live URL',
+      type: 'string',
+      description: 'Domain shown in browser chrome (e.g. kidancoffee.com)',
+    }),
+    defineField({
       name: 'year',
       title: 'Year',
       type: 'string',

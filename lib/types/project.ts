@@ -18,6 +18,7 @@ export interface Project {
   year: string
   role: string
   status: string
+  url?: string
   brief: string[]
   approach: string[]
   builtList: string[][]

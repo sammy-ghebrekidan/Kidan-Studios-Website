@@ -58,7 +58,7 @@ const ProjectCaseStudy = ({ project }: { project: Project }) => {
       </section>
 
       <section className="wrap" style={{ paddingBottom: 'clamp(56px,7vw,90px)' }}>
-        <ShotGallery shots={project.shots} />
+        <ShotGallery shots={project.shots} url={project.url} />
       </section>
 
       <Prompt heading="building something similar?" subtext="fixed quote within two working days, and an honest answer on whether it's worth doing at all." />

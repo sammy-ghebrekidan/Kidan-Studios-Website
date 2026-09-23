@@ -22,6 +22,7 @@ export interface Project {
   year: string
   role: string
   status: string
+  url?: string
   brief?: PortableTextBlock[]
   approach?: PortableTextBlock[]
   builtList?: Array<{

@@ -987,29 +987,107 @@ figure.shot figcaption{
 
 /* ── project detail ─────────────────────────── */
 
-/* Shot gallery — image carousel with thumbnails + tall auto-scroll */
+/* Shot gallery — browser chrome + carousel + auto-scroll */
 .sg{ display:flex; flex-direction:column; gap:12px }
 
-.sg-main{
-  position:relative;
-  border-radius:18px;
+/* Browser chrome wrapper */
+.sg-browser{
+  border-radius:14px;
   overflow:hidden;
   border:1px solid var(--line);
+  box-shadow:0 32px 80px -20px rgba(0,0,0,.65), 0 1px 0 rgba(255,255,255,.04) inset;
   background:var(--bg-2);
 }
 
-/* normal shots — fixed aspect ratio */
+/* Top chrome bar */
+.sg-chrome{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:0 14px;
+  height:38px;
+  background:var(--bg-3);
+  border-bottom:1px solid var(--line);
+  flex-shrink:0;
+}
+
+/* Traffic light dots */
+.sg-dots{
+  display:flex;
+  gap:6px;
+  flex-shrink:0;
+}
+.sg-dots i{
+  display:block;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--line-hi);
+}
+.sg-dots i:nth-child(1){ background:#FF5F57 }
+.sg-dots i:nth-child(2){ background:#FEBC2E }
+.sg-dots i:nth-child(3){ background:#28C840 }
+
+/* URL bar */
+.sg-urlbar{
+  flex:1;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:var(--bg-2);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:0 10px;
+  height:22px;
+  font-size:11px;
+  color:var(--fg-3);
+  letter-spacing:.01em;
+  max-width:340px;
+  margin:0 auto;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+.sg-urlbar svg{
+  width:10px;
+  height:10px;
+  flex-shrink:0;
+  color:var(--fg-3);
+}
+
+/* Right side chrome placeholders */
+.sg-chrome-actions{
+  display:flex;
+  gap:6px;
+  flex-shrink:0;
+}
+.sg-chrome-actions i{
+  display:block;
+  width:20px;
+  height:14px;
+  border-radius:3px;
+  background:var(--line);
+}
+
+/* Image viewport */
+.sg-main{
+  position:relative;
+  overflow:hidden;
+  background:var(--bg-2);
+}
+
 .sg-main img{
   width:100%;
   height:auto;
   display:block;
   aspect-ratio:16/10;
   object-fit:cover;
-  transition:opacity .25s ease;
+  transition:opacity .2s ease;
 }
 
-/* tall shots — fixed height container, image overflows and scrolls */
+/* tall / full-page mode */
 .sg-main--tall{
+  max-height:clamp(400px,55vw,680px);
   cursor:ns-resize;
 }
 .sg-main--tall img{
@@ -1020,33 +1098,26 @@ figure.shot figcaption{
   transform:translateY(0);
   will-change:transform;
 }
-/* constrain the container height so image overflows */
-.sg-main--tall{
-  max-height:clamp(400px, 55vw, 680px);
-}
 
-/* hover hint badge */
 .sg-scroll-hint{
   position:absolute;
-  bottom:14px;
-  right:14px;
+  bottom:12px;
+  right:12px;
   background:rgba(20,20,20,.75);
   backdrop-filter:blur(8px);
   border:1px solid var(--line-hi);
   border-radius:99px;
-  padding:5px 12px;
+  padding:4px 11px;
   font-size:11px;
-  letter-spacing:.06em;
+  letter-spacing:.05em;
   text-transform:lowercase;
   color:var(--fg-2);
   pointer-events:none;
-  opacity:1;
   transition:opacity .3s;
 }
-.sg-main--tall:hover .sg-scroll-hint{
-  opacity:0;
-}
+.sg-main--tall:hover .sg-scroll-hint{ opacity:0 }
 
+/* Caption */
 .sg-caption{
   font-size:var(--t-sm);
   color:var(--fg-3);
@@ -1056,6 +1127,7 @@ figure.shot figcaption{
   padding:2px 4px;
 }
 
+/* Thumbnails */
 .sg-thumbs{
   display:flex;
   gap:8px;
@@ -1070,8 +1142,8 @@ figure.shot figcaption{
   flex:none;
   position:relative;
   width:clamp(64px,8vw,100px);
-  aspect-ratio:4/3;
-  border-radius:10px;
+  aspect-ratio:16/10;
+  border-radius:8px;
   overflow:hidden;
   border:2px solid transparent;
   cursor:pointer;
@@ -1081,24 +1153,14 @@ figure.shot figcaption{
   transition:opacity .2s, border-color .2s;
 }
 .sg-thumb:hover{ opacity:.7 }
-.sg-thumb.on{
-  border-color:var(--fg);
-  opacity:1;
-}
-.sg-thumb img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
+.sg-thumb.on{ border-color:var(--fg); opacity:1 }
+.sg-thumb img{ width:100%; height:100%; object-fit:cover; display:block }
 
-/* tall indicator badge on thumbnail */
 .sg-thumb-badge{
   position:absolute;
-  bottom:4px;
-  right:4px;
+  bottom:3px; right:3px;
   background:rgba(20,20,20,.8);
-  border-radius:4px;
+  border-radius:3px;
   font-size:9px;
   padding:1px 4px;
   color:var(--fg-3);
@@ -1106,7 +1168,10 @@ figure.shot figcaption{
 }
 
 @media(max-width:768px){
-  .sg-main--tall{ max-height:clamp(300px,70vw,500px) }
+  .sg-chrome{ height:32px; padding:0 10px }
+  .sg-dots i{ width:8px; height:8px }
+  .sg-urlbar{ font-size:10px; max-width:200px }
+  .sg-main--tall{ max-height:clamp(280px,70vw,480px) }
   .sg-scroll-hint{ display:none }
 }
 
