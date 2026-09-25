@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 interface Shot {
   src: string
@@ -11,101 +11,131 @@ interface Shot {
 
 interface ShotGalleryProps {
   shots: Shot[]
-  url?: string  // e.g. "kidancoffee.com" — shown in the browser chrome bar
 }
 
-export default function ShotGallery({ shots, url }: ShotGalleryProps) {
-  const [active, setActive] = useState(0)
-  const imgRef = useRef<HTMLImageElement>(null)
+export default function ShotGallery({ shots }: ShotGalleryProps) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const isOpen = openIndex !== null
+  const count = shots.length
 
-  if (!shots.length) return null
+  const close = useCallback(() => setOpenIndex(null), [])
+  const next = useCallback(
+    () => setOpenIndex((i) => (i === null ? i : (i + 1) % count)),
+    [count]
+  )
+  const prev = useCallback(
+    () => setOpenIndex((i) => (i === null ? i : (i - 1 + count) % count)),
+    [count]
+  )
 
-  const current = shots[active]
-  const isTall = current.tall
+  // Keyboard controls + lock body scroll while the lightbox is open
+  useEffect(() => {
+    if (!isOpen) return
 
-  function handleMouseEnter() {
-    if (!isTall || !imgRef.current) return
-    const img = imgRef.current
-    const container = img.parentElement as HTMLElement
-    const scrollDist = img.naturalHeight - container.offsetHeight
-    if (scrollDist <= 0) return
-    img.style.transition = `transform ${Math.max(3, scrollDist / 80)}s linear`
-    img.style.transform = `translateY(-${scrollDist}px)`
-  }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') close()
+      else if (e.key === 'ArrowRight') next()
+      else if (e.key === 'ArrowLeft') prev()
+    }
 
-  function handleMouseLeave() {
-    if (!isTall || !imgRef.current) return
-    const img = imgRef.current
-    img.style.transition = 'transform 0.6s ease'
-    img.style.transform = 'translateY(0)'
-  }
+    document.addEventListener('keydown', onKey)
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prevOverflow
+    }
+  }, [isOpen, close, next, prev])
+
+  if (!count) return null
+
+  const active = openIndex !== null ? shots[openIndex] : null
 
   return (
-    <div className="sg">
+    <>
+      <div className="sgrid">
+        {shots.map((shot, i) => (
+          <figure
+            key={i}
+            className={shot.tall ? 'sgrid-item sgrid-item--tall' : 'sgrid-item'}
+          >
+            <button
+              type="button"
+              className="sg-main"
+              onClick={() => setOpenIndex(i)}
+              aria-label={`View ${shot.caption || shot.alt || `screenshot ${i + 1}`} full size`}
+            >
+              <img
+                src={shot.src}
+                alt={shot.alt}
+                loading="lazy"
+                decoding="async"
+              />
+              <span className="sg-zoom" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+                  <path d="M16 16l4.5 4.5M11 8v6M8 11h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </span>
+            </button>
 
-      {/* Browser chrome frame */}
-      <div className="sg-browser">
-        <div className="sg-chrome" aria-hidden="true">
-          <span className="sg-dots">
-            <i /><i /><i />
-          </span>
-          <span className="sg-urlbar">
-            <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-              <circle cx="6" cy="6" r="5.5" stroke="currentColor" strokeWidth="1"/>
-              <path d="M6 1C6 1 4 3.5 4 6s2 5 2 5M6 1c0 0 2 2.5 2 5s-2 5-2 5M1 6h10" stroke="currentColor" strokeWidth="1"/>
-            </svg>
-            {url || 'shopify store'}
-          </span>
-          <span className="sg-chrome-actions">
-            <i /><i />
-          </span>
-        </div>
-
-        {/* Main image viewport */}
-        <div
-          className={isTall ? 'sg-main sg-main--tall' : 'sg-main'}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          <img
-            ref={imgRef}
-            key={active}
-            src={current.src}
-            alt={current.alt}
-            loading="lazy"
-            decoding="async"
-          />
-          {isTall && (
-            <span className="sg-scroll-hint" aria-hidden="true">
-              hover to scroll
-            </span>
-          )}
-        </div>
+            {shot.caption && (
+              <figcaption className="sg-caption">{shot.caption}</figcaption>
+            )}
+          </figure>
+        ))}
       </div>
 
-      {/* Caption */}
-      {current.caption && (
-        <p className="sg-caption">{current.caption}</p>
-      )}
+      {isOpen && active && (
+        <div
+          className="sg-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={active.caption || active.alt || 'Screenshot'}
+          onClick={close}
+        >
+          <button
+            type="button"
+            className="sg-lb-close"
+            onClick={close}
+            aria-label="Close"
+          >
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+          </button>
 
-      {/* Thumbnail strip */}
-      {shots.length > 1 && (
-        <div className="sg-thumbs" role="tablist" aria-label="Project screenshots">
-          {shots.map((shot, i) => (
+          {count > 1 && (
             <button
-              key={i}
-              role="tab"
-              aria-selected={i === active}
-              aria-label={shot.caption || `Screenshot ${i + 1}`}
-              className={i === active ? 'sg-thumb on' : 'sg-thumb'}
-              onClick={() => setActive(i)}
+              type="button"
+              className="sg-lb-nav sg-lb-nav--prev"
+              onClick={(e) => { e.stopPropagation(); prev() }}
+              aria-label="Previous screenshot"
             >
-              <img src={shot.src} alt="" aria-hidden="true" />
-              {shot.tall && <span className="sg-thumb-badge" aria-hidden="true">↕</span>}
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </button>
-          ))}
+          )}
+
+          <figure className="sg-lb-figure" onClick={(e) => e.stopPropagation()}>
+            <img src={active.src} alt={active.alt} decoding="async" />
+            {active.caption && <figcaption>{active.caption}</figcaption>}
+          </figure>
+
+          {count > 1 && (
+            <button
+              type="button"
+              className="sg-lb-nav sg-lb-nav--next"
+              onClick={(e) => { e.stopPropagation(); next() }}
+              aria-label="Next screenshot"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+          )}
+
+          {count > 1 && (
+            <span className="sg-lb-counter" aria-hidden="true">{(openIndex ?? 0) + 1} / {count}</span>
+          )}
         </div>
       )}
-    </div>
+    </>
   )
 }

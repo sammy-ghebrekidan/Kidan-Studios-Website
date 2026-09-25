@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
 import ProjectCaseStudy from './ProjectCaseStudy'
-import type { Project } from '@/lib/data/projects'
+import type { Project } from '@/lib/types'
 
 const mockProject: Project = {
   slug: 'test-project',
@@ -41,9 +41,9 @@ describe('ProjectCaseStudy', () => {
     expect(screen.getByText('Development')).toBeInTheDocument()
   })
 
-  it('renders brief and approach sections', () => {
+  it('renders challenge and approach sections', () => {
     render(<ProjectCaseStudy project={mockProject} />)
-    expect(screen.getByText('the brief')).toBeInTheDocument()
+    expect(screen.getByText('the challenge')).toBeInTheDocument()
     expect(screen.getByText('the approach')).toBeInTheDocument()
     expect(screen.getByText('Brief paragraph one.')).toBeInTheDocument()
   })
