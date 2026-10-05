@@ -107,3 +107,9 @@ export const siteSettingsQuery = groq`
 
 // About page content query
 export const aboutContentQuery = groq`*[_type == "aboutContent"][0] { eyebrow, heading, lede, image, imageCaption, servicesHeading, servicesParagraphs, processHeading, processParagraphs, skills, ctaHeading, ctaSubtext, ctaLabel, ctaHref, metaTitle, metaDescription }`
+
+// Services page content query
+export const servicesContentQuery = groq`*[_type == "servicesContent"][0] { eyebrow, heading, lede, trustBar, tiers, processHeading, processLede, processSteps, faqHeading, faqLede, faqs, promptHeading, promptSubtext, metaTitle, metaDescription }`
+
+// Contact page content query
+export const contactContentQuery = groq`*[_type == "contactContent"][0] { heading, lede, metaTitle, metaDescription }`

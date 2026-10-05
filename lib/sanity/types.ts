@@ -155,3 +155,38 @@ export interface SiteSettings {
     instagram?: string
   }
 }
+
+export type ServicesContent = {
+  eyebrow?: string
+  heading?: string
+  lede?: string
+  trustBar?: Array<{ label?: string; value?: string }>
+  tiers?: Array<{
+    badge?: string
+    name?: string
+    description?: string
+    price?: string
+    duration?: string
+    features?: string[]
+    ctaLabel?: string
+    ctaHref?: string
+    featured?: boolean
+  }>
+  processHeading?: string
+  processLede?: string
+  processSteps?: Array<{ number?: string; title?: string; blurb?: string }>
+  faqHeading?: string
+  faqLede?: string
+  faqs?: Array<{ question?: string; answer?: string }>
+  promptHeading?: string
+  promptSubtext?: string
+  metaTitle?: string
+  metaDescription?: string
+}
+
+export type ContactContent = {
+  heading?: string
+  lede?: string
+  metaTitle?: string
+  metaDescription?: string
+}
