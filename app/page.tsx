@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Ticker, Marquee, Prompt, WorkRow } from '@/components'
+import { Ticker, Marquee, WorkRow } from '@/components'
 import { client, homeContentQuery, projectsQuery, blogPostsQuery, urlFor } from '@/lib/sanity'
 import type { HomeContent, Project, BlogPost } from '@/lib/sanity'
 
@@ -200,16 +200,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <Prompt
-        heading={closingCta.heading}
-        subtext={closingCta.subtext}
-        actions={
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <Link className="btn" href="/contact">get in touch</Link>
-            <a className="btn ghost" href="mailto:hello@kidanstudios.co.uk">email direct</a>
-          </div>
-        }
-      />
+      <section className="wrap sec" style={{ paddingBottom: 'clamp(64px,8vw,120px)', borderTop: '1px solid var(--line)' }}>
+        <p className="eyebrow" style={{ marginBottom: '24px', color: 'var(--fg-3)' }}>next steps</p>
+        <h2 className="h2" style={{ marginBottom: '32px', maxWidth: '18ch' }}>{closingCta.heading}</h2>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <Link className="btn" href="/contact">start a project</Link>
+          <a className="btn ghost" href="mailto:hello@kidanstudios.co.uk">email direct</a>
+        </div>
+      </section>
 
       <Marquee />
     </main>
