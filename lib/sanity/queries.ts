@@ -104,3 +104,6 @@ export const siteSettingsQuery = groq`
     socialLinks
   }
 `
+
+// About page content query
+export const aboutContentQuery = groq`*[_type == "aboutContent"][0] { eyebrow, heading, lede, image, imageCaption, servicesHeading, servicesParagraphs, processHeading, processParagraphs, skills, ctaHeading, ctaSubtext, ctaLabel, ctaHref, metaTitle, metaDescription }`

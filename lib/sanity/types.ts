@@ -120,6 +120,25 @@ export interface HomeContent {
   }
 }
 
+export type AboutContent = {
+  eyebrow?: string
+  heading?: string
+  lede?: string
+  image?: { asset: { _ref: string }; hotspot?: object }
+  imageCaption?: string
+  servicesHeading?: string
+  servicesParagraphs?: Array<{ text: string }>
+  processHeading?: string
+  processParagraphs?: Array<{ text: string }>
+  skills?: string[]
+  ctaHeading?: string
+  ctaSubtext?: string
+  ctaLabel?: string
+  ctaHref?: string
+  metaTitle?: string
+  metaDescription?: string
+}
+
 export interface SiteSettings {
   title: string
   description: string
