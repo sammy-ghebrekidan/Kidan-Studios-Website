@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Ticker, Marquee, WorkRow } from '@/components'
+import { Ticker, WorkRow } from '@/components'
 import { client, homeContentQuery, projectsQuery, blogPostsQuery, urlFor } from '@/lib/sanity'
 import type { HomeContent, Project, BlogPost } from '@/lib/sanity'
 
@@ -209,7 +209,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <Marquee />
     </main>
   )
 }

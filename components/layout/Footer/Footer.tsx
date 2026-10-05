@@ -5,12 +5,6 @@ const Footer = () => {
   return (
     <footer>
       <div className="wrap">
-        {/* Lead CTA */}
-        <div className="fhead">
-          <h2 className="h2">let&apos;s build something</h2>
-          <Link className="btn" href="/contact">start a project</Link>
-        </div>
-
         {/* Grid */}
         <div className="fgrid">
           <div>
