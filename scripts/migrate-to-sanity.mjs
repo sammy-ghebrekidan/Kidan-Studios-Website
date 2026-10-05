@@ -437,6 +437,193 @@ async function migrateSiteSettings() {
   console.log('  ✅ Site settings created')
 }
 
+// ─── About Page Content ──────────────────────────────────────────────────────
+
+async function migrateAboutContent() {
+  console.log('\n👤 Migrating about page content...')
+
+  const existing = await client.fetch(`*[_type == "aboutContent"][0]._id`)
+  if (existing) {
+    console.log('  ⏭️  Already exists — skipping')
+    return
+  }
+
+  // Upload the about page band image
+  const bandImage = await uploadImage('img-cafe-room.jpg')
+
+  const aboutDoc = {
+    _type: 'aboutContent',
+    _id: 'singleton-about-content',
+    eyebrow: 'shopify studio · london',
+    heading: 'about',
+    lede: 'kidan studios is a shopify studio based in london. i build stores that are fast, clean and actually work.',
+    image: bandImage ? {
+      _type: 'image',
+      asset: { _type: 'reference', _ref: bandImage._id },
+    } : undefined,
+    imageCaption: 'london, uk',
+    servicesHeading: 'services',
+    servicesParagraphs: [
+      { _key: 'sp1', text: 'i work with brands directly to build and improve their shopify stores — from custom themes to performance fixes to full builds from scratch.' },
+      { _key: 'sp2', text: 'every build gets the same care — clean liquid code, fast load times, stores that are easy to maintain and don\'t break when you update them.' },
+      { _key: 'sp3', text: "and when a project needs more than shopify's editor, i go fullstack — javascript, react and node — so nothing is off the table." },
+    ],
+    processHeading: 'process',
+    processParagraphs: [
+      { _key: 'pp1', text: 'straightforward by design — no fluff, no handoffs, just good work delivered on time.' },
+      { _key: 'pp2', text: "every project starts with understanding what you actually need — not just what you asked for. then it's built cleanly, tested properly, and handed over so you can run it yourself." },
+      { _key: 'pp3', text: "the stack: shopify's liquid system, dawn theme architecture and custom sections — with javascript or react where a project calls for it." },
+    ],
+    skills: [
+      'Shopify Liquid',
+      'Dawn Theme',
+      'React / Next.js',
+      'Node.js',
+      'TypeScript',
+      'Performance Optimisation',
+    ],
+    ctaHeading: 'got a project?',
+    ctaSubtext: "send a message and you'll hear back within 24 hours.",
+    ctaLabel: 'start a project →',
+    ctaHref: '/contact',
+    metaTitle: 'About',
+    metaDescription: 'Kidan Studios is a Shopify studio based in London. I build stores that are fast, clean and actually work.',
+  }
+
+  await client.createOrReplace(aboutDoc)
+  console.log('  ✅ About page content created')
+}
+
+// ─── Services Page Content ───────────────────────────────────────────────────
+
+async function migrateServicesContent() {
+  console.log('\n🛠️  Migrating services page content...')
+
+  const existing = await client.fetch(`*[_type == "servicesContent"][0]._id`)
+  if (existing) {
+    console.log('  ⏭️  Already exists — skipping')
+    return
+  }
+
+  const servicesDoc = {
+    _type: 'servicesContent',
+    _id: 'singleton-services-content',
+    eyebrow: 'services & pricing',
+    heading: 'what it costs',
+    lede: 'clear scope, fixed quotes, no hourly billing. pick the starting point that matches where your store is now.',
+    trustBar: [
+      { _key: 'tb1', label: 'quotes are', value: 'fixed, not hourly' },
+      { _key: 'tb2', label: 'you get', value: 'full code ownership' },
+      { _key: 'tb3', label: 'handover includes', value: 'docs & a walkthrough' },
+      { _key: 'tb4', label: 'after launch', value: '30 days of fixes free' },
+    ],
+    tiers: [
+      {
+        _key: 'tier1',
+        badge: 'audit',
+        name: 'store audit',
+        description: "a full read on what's slowing your store down and what's costing you conversions.",
+        price: 'from £750',
+        duration: '5 working days',
+        features: [
+          'core web vitals & speed report',
+          'cro review of pdp, cart and checkout',
+          'technical seo & theme code review',
+          'prioritised fix list with effort estimates',
+          '60-minute walkthrough call',
+        ],
+        ctaLabel: 'book an audit',
+        ctaHref: '/contact',
+        featured: false,
+      },
+      {
+        _key: 'tier2',
+        badge: 'most projects start here',
+        name: 'theme build',
+        description: 'a custom storefront built on dawn architecture — designed, built and launched.',
+        price: 'from £3,500',
+        duration: '3–6 weeks',
+        features: [
+          'custom theme or dawn customisation',
+          'bespoke sections in liquid',
+          'mobile-first, built for conversion',
+          'app integrations & subscriptions',
+          'analytics, gtm and event tracking',
+          '30 days of post-launch fixes',
+        ],
+        ctaLabel: 'start a project',
+        ctaHref: '/contact',
+        featured: true,
+      },
+      {
+        _key: 'tier3',
+        badge: 'retainer',
+        name: 'ongoing partner',
+        description: 'a developer on hand for the roadmap, the experiments and the things that break.',
+        price: 'from £900',
+        duration: 'per month, cancel anytime',
+        features: [
+          'agreed hours each month',
+          'new sections and features',
+          'cro tests and iteration',
+          'performance monitoring',
+          'priority response on issues',
+        ],
+        ctaLabel: 'enquire',
+        ctaHref: '/contact',
+        featured: false,
+      },
+    ],
+    processHeading: 'how it works',
+    processLede: 'four steps, no handoffs, no account managers.',
+    processSteps: [
+      { _key: 'ps1', number: '01', title: 'call', blurb: "30 minutes on your store, your numbers and what's actually in the way." },
+      { _key: 'ps2', number: '02', title: 'quote', blurb: 'a fixed price and a scope document within two working days.' },
+      { _key: 'ps3', number: '03', title: 'build', blurb: 'weekly updates on a staging theme you can click through yourself.' },
+    ],
+    faqHeading: 'questions',
+    faqLede: 'the things brands ask before getting in touch.',
+    faqs: [
+      { _key: 'faq1', question: 'do you work with shopify plus?', answer: "Yes. Plus builds usually involve more app integration and checkout extensibility work, so they're quoted individually — but the process and the fixed-price approach are the same." },
+      { _key: 'faq2', question: 'can you work with my existing theme?', answer: "Usually. If the theme is well-built, customising it is faster and cheaper than starting over. If it's been through several developers and the code is fighting itself, I'll tell you that honestly — a rebuild sometimes costs less than untangling it." },
+      { _key: 'faq3', question: 'who owns the code?', answer: "You do. Everything is built in your Shopify admin on a theme you own, with no proprietary frameworks or licences tied to me. You can hand it to another developer at any point." },
+      { _key: 'faq4', question: 'how do payments work?', answer: "50% to book the slot, 50% on launch. Retainers are billed monthly in advance and can be cancelled with 30 days' notice." },
+      { _key: 'faq5', question: 'what do you need from me to start?', answer: "Store access, your brand assets, and someone who can make decisions. The less time a project spends waiting on approvals, the cheaper it gets for you." },
+    ],
+    promptHeading: 'not sure which one you need?',
+    promptSubtext: "describe the store and the problem. i'll tell you which route makes sense — including if that's none of them.",
+    metaTitle: 'Services & Pricing',
+    metaDescription: 'Clear scope, fixed quotes, no hourly billing. Custom Shopify themes from £3,500.',
+  }
+
+  await client.createOrReplace(servicesDoc)
+  console.log('  ✅ Services page content created')
+}
+
+// ─── Contact Page Content ────────────────────────────────────────────────────
+
+async function migrateContactContent() {
+  console.log('\n✉️  Migrating contact page content...')
+
+  const existing = await client.fetch(`*[_type == "contactContent"][0]._id`)
+  if (existing) {
+    console.log('  ⏭️  Already exists — skipping')
+    return
+  }
+
+  const contactDoc = {
+    _type: 'contactContent',
+    _id: 'singleton-contact-content',
+    heading: 'start a project',
+    lede: "a few quick questions, about two minutes — big rebuild or a five-minute fix, same form. you'll hear back within 24 hours.",
+    metaTitle: 'Contact',
+    metaDescription: 'Start a project with Kidan Studios. A few quick questions, about two minutes.',
+  }
+
+  await client.createOrReplace(contactDoc)
+  console.log('  ✅ Contact page content created')
+}
+
 // ─── Main ────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -459,6 +646,9 @@ async function main() {
     await migrateBlogPosts()
     await migrateHomeContent()
     await migrateSiteSettings()
+    await migrateAboutContent()
+    await migrateServicesContent()
+    await migrateContactContent()
 
     console.log('\n' + '─'.repeat(50))
     console.log('✅ Migration complete!')
