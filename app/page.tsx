@@ -205,7 +205,7 @@ export default async function HomePage() {
         subtext={closingCta.subtext}
         actions={
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <Link className="btn" href="/contact">start a project</Link>
+            <Link className="btn" href="/contact">get in touch</Link>
             <a className="btn ghost" href="mailto:hello@kidanstudios.co.uk">email direct</a>
           </div>
         }
