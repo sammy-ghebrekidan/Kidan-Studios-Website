@@ -24,7 +24,6 @@ export default async function BlogPage() {
           <div className="txt">
             <p className="lede-sm">ideas for better shopify stores — performance, cro, and what actually moves revenue.</p>
           </div>
-          <Link className="btn" href="/contact">start a project</Link>
         </div>
       </section>
 

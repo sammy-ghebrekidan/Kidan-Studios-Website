@@ -26,7 +26,7 @@ export default async function WorkPage() {
           <div className="txt">
             <p className="lede-sm">two shopify builds — one live brand, one concept store. both built on clean liquid, both built to convert.</p>
           </div>
-          <Link className="btn" href="/contact">start a project</Link>
+          <Link className="btn ghost" href="/services">see pricing</Link>
         </div>
       </section>
       <section className="wrap sec pt0">
