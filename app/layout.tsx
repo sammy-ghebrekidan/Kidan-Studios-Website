@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Funnel_Sans, Inter_Tight } from 'next/font/google'
 import './globals.css'
-import { Header, Footer, SvgSprite, GsapProvider } from '@/components'
+import { Header, Footer, Marquee, SvgSprite, GsapProvider } from '@/components'
 
 const funnelSans = Funnel_Sans({
   subsets: ['latin'],
@@ -75,6 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div id="main" tabIndex={-1}></div>
           <SvgSprite />
           {children}
+          <Marquee />
           <Footer />
         </div>
         <GsapProvider />
