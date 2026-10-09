@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Marquee, WorkRow } from '@/components'
+import { WorkRow } from '@/components'
 import { client, projectsQuery, urlFor } from '@/lib/sanity'
 import type { Project as SanityProject } from '@/lib/sanity'
 
@@ -58,7 +58,6 @@ export default async function WorkPage() {
           })}
         </div>
       </section>
-      <Marquee />
     </main>
   )
 }
