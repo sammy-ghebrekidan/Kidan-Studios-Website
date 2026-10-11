@@ -135,7 +135,7 @@ export default async function ServicesPage() {
               <span className="badge">{tier.badge}</span>
               <h3>{tier.name}</h3>
               <p className="desc">{tier.description}</p>
-              <p className="price">{tier.price}<small>{tier.duration}</small></p>
+              {/* <p className="price">{tier.price}<small>{tier.duration}</small></p> */}
               <ul>
                 {(tier.features ?? []).map((feature, j) => (
                   <li key={j}>{feature}</li>
