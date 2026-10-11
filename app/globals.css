@@ -1219,13 +1219,11 @@ figure.shot figcaption{
 .article p em{color:var(--fg-3)}
 
 /* ── footer ─────────────────────────────────── */
-footer{border-top:1px solid var(--line);padding-block:clamp(64px,7vw,100px) clamp(32px,3vw,48px)}
-.fhead{
-  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
-  padding-bottom:clamp(40px,4vw,64px);margin-bottom:clamp(40px,4vw,64px);border-bottom:1px solid var(--line);
-}
-.fhead h2{margin:0}
-.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+footer{border-top:1px solid var(--line);padding-block:clamp(28px,3vw,44px)}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.footer-nav{display:flex;align-items:center;gap:clamp(16px,2vw,32px);flex-wrap:wrap}
+.footer-nav a{font-size:var(--t-base);letter-spacing:var(--tr-ui);text-transform:lowercase;color:var(--fg-3);transition:color .15s}
+.footer-nav a:hover{color:var(--fg)}
 .femail{font-size:var(--t-lg);font-weight:500;letter-spacing:var(--tr-head);color:var(--fg);transition:color .15s}
 .femail:hover{color:var(--fg-max)}
 .fmeta{font-size:var(--t-base);color:var(--fg-3);margin-top:12px;letter-spacing:var(--tr-ui);text-transform:lowercase}
@@ -1236,7 +1234,7 @@ footer li a:hover{color:var(--fg)}
 .fbottom{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:clamp(40px,4vw,64px);padding-top:clamp(24px,2.4vw,32px);border-top:1px solid var(--line);flex-wrap:wrap}
 .fmark{font-size:var(--t-base);font-weight:600;letter-spacing:var(--tr-head);color:var(--fg)}
 .flegal{font-size:var(--t-sm);letter-spacing:var(--tr-ui);color:var(--fg-3)}
-@media(max-width:900px){.fgrid{grid-template-columns:1fr;gap:32px}.fhead{flex-direction:column;align-items:flex-start}}
+@media(max-width:700px){.footer-inner{flex-direction:column;align-items:flex-start;gap:16px}}
 #stage[data-vp="phone"] .fgrid{grid-template-columns:1fr;gap:32px}
 
 /* ── contact ────────────────────────────────── */

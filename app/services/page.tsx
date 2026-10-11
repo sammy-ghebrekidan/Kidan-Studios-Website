@@ -8,23 +8,23 @@ import type { ServicesContent } from '@/lib/sanity/types'
 export async function generateMetadata(): Promise<Metadata> {
   const data: ServicesContent | null = await client.fetch(servicesContentQuery)
   return {
-    title: data?.metaTitle ?? 'Services & Pricing',
-    description: data?.metaDescription ?? 'Clear scope, fixed quotes, no hourly billing. Custom Shopify themes from £3,500.',
+    title: data?.metaTitle ?? 'Services',
+    description: data?.metaDescription ?? 'Shopify web development services — store audits, builds, and ongoing support for e-commerce brands.',
   }
 }
 
 export default async function ServicesPage() {
   const data: ServicesContent | null = await client.fetch(servicesContentQuery)
 
-  const eyebrow = data?.eyebrow ?? 'services & pricing'
-  const heading = data?.heading ?? 'what it costs'
-  const lede = data?.lede ?? 'clear scope, fixed quotes, no hourly billing. pick the starting point that matches where your store is now.'
+  const eyebrow = data?.eyebrow ?? 'shopify web development'
+  const heading = data?.heading ?? 'what we do'
+  const lede = data?.lede ?? 'three ways we help shopify stores perform better — pick the one that matches where you are now.'
 
   const trustBar = data?.trustBar ?? [
-    { label: 'quotes are', value: 'fixed, not hourly' },
-    { label: 'you get', value: 'full code ownership' },
-    { label: 'handover includes', value: 'docs & a walkthrough' },
-    { label: 'after launch', value: '30 days of fixes free' },
+    { label: 'based in', value: 'london, uk' },
+    { label: 'works with', value: 'shopify & shopify plus' },
+    { label: 'you own', value: 'all the code' },
+    { label: 'after launch', value: '30 days of support' },
   ]
 
   const tiers = data?.tiers ?? [
@@ -48,7 +48,7 @@ export default async function ServicesPage() {
     {
       badge: 'most projects start here',
       name: 'theme build',
-      description: 'a custom storefront built on dawn architecture — designed, built and launched.',
+      description: 'a custom shopify storefront built on clean liquid — designed, built and launched.',
       price: 'from £3,500',
       duration: '3–6 weeks',
       features: [
@@ -86,17 +86,17 @@ export default async function ServicesPage() {
   const processLede = data?.processLede ?? 'four steps, no handoffs, no account managers.'
   const processSteps = data?.processSteps ?? [
     { number: '01', title: 'call', blurb: "30 minutes on your store, your numbers and what's actually in the way." },
-    { number: '02', title: 'quote', blurb: 'a fixed price and a scope document within two working days.' },
+    { number: '02', title: 'quote', blurb: 'a clear scope document and quote within two working days.' },
     { number: '03', title: 'build', blurb: 'weekly updates on a staging theme you can click through yourself.' },
   ]
 
   const faqHeading = data?.faqHeading ?? 'questions'
   const faqLede = data?.faqLede ?? 'the things brands ask before getting in touch.'
   const faqs = data?.faqs ?? [
-    { question: 'do you work with shopify plus?', answer: 'Yes. Plus builds usually involve more app integration and checkout extensibility work, so they\'re quoted individually — but the process and the fixed-price approach are the same.' },
+    { question: 'do you work with shopify plus?', answer: 'Yes. Plus builds usually involve more app integration and checkout extensibility work, so they\'re scoped individually — but the process and the transparent approach are the same.' },
     { question: 'can you work with my existing theme?', answer: "Usually. If the theme is well-built, customising it is faster and cheaper than starting over. If it's been through several developers and the code is fighting itself, I'll tell you that honestly — a rebuild sometimes costs less than untangling it." },
     { question: 'who owns the code?', answer: "You do. Everything is built in your Shopify admin on a theme you own, with no proprietary frameworks or licences tied to me. You can hand it to another developer at any point." },
-    { question: 'how do payments work?', answer: '50% to book the slot, 50% on launch. Retainers are billed monthly in advance and can be cancelled with 30 days\' notice.' },
+    { question: 'how do payments work?', answer: 'Payment structure is agreed as part of scoping. Get in touch and we can discuss what works for your project.' },
     { question: 'what do you need from me to start?', answer: "Store access, your brand assets, and someone who can make decisions. The less time a project spends waiting on approvals, the cheaper it gets for you." },
   ]
 
@@ -108,40 +108,36 @@ export default async function ServicesPage() {
       <section className="wrap pagehead-lg">
         <p className="eyebrow" style={{ marginBottom: '26px' }}>{eyebrow}</p>
         <h1 className="h1">{heading}</h1>
-        <div className="sechead" style={{ marginTop: '44px', marginBottom: '0' }}>
-          <div className="txt">
-            <p className="lede-sm">{lede}</p>
-          </div>
-          <Link className="btn" href="/contact">get a quote</Link>
-        </div>
+        <p className="lede-sm" style={{ marginTop: 'clamp(22px,2.4vw,34px)', maxWidth: '52ch' }}>{lede}</p>
       </section>
 
       <section className="wrap" style={{ paddingBottom: 'clamp(28px,3vw,44px)' }}>
-        <dl className="trust">
+        <dl className="factbar">
           {trustBar.map((item, i) => (
-            <div key={i}>
-              <dt>{item.label}</dt>
-              <dd>{item.value}</dd>
-            </div>
+            <div key={i}><dt>{item.label}</dt><dd>{item.value}</dd></div>
           ))}
         </dl>
       </section>
 
-      <section className="wrap sec" style={{ paddingTop: 'clamp(36px,4vw,60px)' }} aria-labelledby="pricing-title">
-        <h2 className="sr" id="pricing-title">Pricing</h2>
+      <section className="wrap sec" style={{ paddingTop: 'clamp(36px,4vw,60px)' }} aria-labelledby="services-title">
+        <div className="sechead" style={{ marginBottom: 'clamp(28px,3vw,44px)' }}>
+          <div className="txt">
+            <h2 className="h2" id="services-title">services</h2>
+          </div>
+          <Link className="btn" href="/contact">get in touch</Link>
+        </div>
         <div className="tiers">
           {tiers.map((tier, i) => (
             <article key={i} className={`tier${tier.featured ? ' feat' : ''}`}>
               <span className="badge">{tier.badge}</span>
               <h3>{tier.name}</h3>
               <p className="desc">{tier.description}</p>
-              {/* <p className="price">{tier.price}<small>{tier.duration}</small></p> */}
               <ul>
                 {(tier.features ?? []).map((feature, j) => (
                   <li key={j}>{feature}</li>
                 ))}
               </ul>
-              <Link className={`btn${tier.featured ? '' : ' ghost'}`} href={tier.ctaHref ?? '/contact'}>
+              <Link className={`btn${tier.featured ? '' : ' ghost'}`} href={tier.ctaHref ?? '/contact'} style={{ marginTop: 'auto' }}>
                 {tier.ctaLabel}
               </Link>
             </article>

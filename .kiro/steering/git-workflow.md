@@ -29,3 +29,7 @@ Use conventional commits:
 - `chore:` maintenance, deps, config
 - `refactor:` code changes with no behaviour change
 - `docs:` documentation only
+
+## Never auto-commit or auto-push
+
+Do NOT commit or push changes without explicit user request. Always wait for the user to say "commit", "push", or "git commit and push" before taking any git actions.
