@@ -18,7 +18,7 @@ export const SimpleContactForm = () => {
 
   if (done) {
     return (
-      <div style={{ maxWidth: '480px' }}>
+      <div>
         <p style={{ fontSize: 'var(--t-lg)', fontWeight: 500, color: 'var(--fg)', marginBottom: '12px' }}>message sent.</p>
         <p style={{ color: 'var(--fg-3)' }}>you'll hear back within 24 hours.</p>
       </div>
