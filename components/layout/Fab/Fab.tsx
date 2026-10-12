@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const Fab = () => {
   return (
-    <Link className="fab glass-rim" id="fab" href="/contact" aria-label="Start a project">
+    <Link className="fab glass-rim" id="fab" href="/start-a-project" aria-label="Start a project">
       <svg className="ring" viewBox="0 0 200 200" aria-hidden="true">
         <defs>
           <path id="fabpath" d="M100,100 m-73,0 a73,73 0 1,1 146,0 a73,73 0 1,1 -146,0" />
