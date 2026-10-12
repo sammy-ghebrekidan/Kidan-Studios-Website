@@ -7,8 +7,8 @@ import type { AboutContent } from '@/lib/sanity'
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch<AboutContent | null>(aboutContentQuery)
   return {
-    title: data?.metaTitle ?? 'About — Kidan Studios',
-    description: data?.metaDescription ?? 'Kidan Studios is a Shopify studio based in London. We build stores that are fast, clean and actually work.',
+    title: data?.metaTitle ?? 'Shopify Developer, London',
+    description: data?.metaDescription ?? 'Kidan Studios is a Shopify developer based in London. Custom theme builds, clean Liquid, and stores that are fast, accessible and built to convert.',
   }
 }
 

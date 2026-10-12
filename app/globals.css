@@ -1,3 +1,36 @@
+/* ── light theme override ─────────────────────────────── */
+/* toggled via html[data-theme="light"] — press Shift+L to switch */
+html[data-theme="light"]{
+  --bg:#F5F3EF;
+  --bg-2:#EDE9E3;
+  --bg-3:#E3DFD9;
+  --line:#D4CFC7;
+  --fg:#1C1A17;
+  --fg-hi:#0A0908;
+  --fg-2:#4A4640;
+  --fg-3:#7A7670;
+  --fg-max:#000;
+  --on-fg:#F5F3EF;
+  --line-hi:#C0BBB4;
+  --veil:rgba(245,243,239,.88);
+  --veil-2:rgba(245,243,239,.94);
+  --spot:rgba(20,20,18,.05);
+  --blend:multiply;
+  --grain-op:.035;
+  --glass-bg:linear-gradient(135deg,rgba(20,18,15,.07) 0%,rgba(20,18,15,.03) 100%);
+  --glass-blur:blur(20px) saturate(140%);
+  --glass-line:rgba(20,18,15,.12);
+  --glass-lit:rgba(255,255,255,.80);
+  --glass-shade:rgba(0,0,0,.08);
+  --glass-cast:0 24px 60px -20px rgba(0,0,0,.18);
+}
+/* flip the silver pill button to a dark one in light mode */
+html[data-theme="light"] .btn:not(.ghost){
+  background:linear-gradient(180deg,#2e2c28 0%,#1e1c18 45%,#282624 100%);
+  border-color:rgba(255,255,255,.12);
+  box-shadow:0 1px 0 rgba(255,255,255,.10) inset,0 2px 8px rgba(0,0,0,.22);
+}
+
 :root{
   --bg:#141414;
   --bg-2:#1A1A19;
@@ -1225,10 +1258,11 @@ figure.shot figcaption{
 @media(max-width:700px){.contact-head{flex-direction:column;align-items:flex-start}}
 
 /* ── footer ─────────────────────────────────── */
-footer{border-top:1px solid var(--line);padding-block:clamp(28px,3vw,44px)}
-.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.footer-nav{display:flex;align-items:center;gap:clamp(16px,2vw,32px);flex-wrap:wrap}
-.footer-nav a{font-size:var(--t-base);letter-spacing:var(--tr-ui);text-transform:lowercase;color:var(--fg-3);transition:color .15s}
+footer{border-top:1px solid var(--line);padding-block:clamp(40px,5vw,72px)}
+.footer-inner{display:flex;flex-direction:column;gap:clamp(28px,3vw,40px)}
+.footer-brand{display:flex;flex-direction:column;gap:8px}
+.footer-nav{display:flex;flex-direction:column;gap:12px}
+.footer-nav a{font-size:var(--t-base);letter-spacing:var(--tr-ui);text-transform:lowercase;color:var(--fg-3);transition:color .15s;width:fit-content}
 .footer-nav a:hover{color:var(--fg)}
 .femail{font-size:var(--t-lg);font-weight:500;letter-spacing:var(--tr-head);color:var(--fg);transition:color .15s}
 .femail:hover{color:var(--fg-max)}
@@ -1240,7 +1274,7 @@ footer li a:hover{color:var(--fg)}
 .fbottom{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:clamp(40px,4vw,64px);padding-top:clamp(24px,2.4vw,32px);border-top:1px solid var(--line);flex-wrap:wrap}
 .fmark{font-size:var(--t-base);font-weight:600;letter-spacing:var(--tr-head);color:var(--fg)}
 .flegal{font-size:var(--t-sm);letter-spacing:var(--tr-ui);color:var(--fg-3)}
-@media(max-width:700px){.footer-inner{flex-direction:column;align-items:flex-start;gap:16px}}
+@media(max-width:700px){.footer-inner{gap:20px}}
 #stage[data-vp="phone"] .fgrid{grid-template-columns:1fr;gap:32px}
 
 /* ── contact ────────────────────────────────── */
