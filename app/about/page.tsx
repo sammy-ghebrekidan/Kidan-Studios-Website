@@ -64,7 +64,7 @@ export default async function AboutPage() {
             <h2 className="h2" id="what-we-do-title">{data?.servicesHeading ?? 'what we do'}</h2>
           </div>
         </div>
-        <div className="svcgrid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'clamp(24px,3vw,40px)' }}>
+        <div className="svcgrid">
           {servicesParagraphs.map((paragraph, index) => (
             <article key={index} className="svccard" style={{ padding: 'clamp(24px,2.5vw,36px)', border: '1px solid var(--line)', borderRadius: '4px' }}>
               <p className="body" style={{ lineHeight: 1.6, color: 'var(--fg)' }}>

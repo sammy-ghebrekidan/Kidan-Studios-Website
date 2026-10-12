@@ -39,7 +39,7 @@ export const SimpleContactForm = () => {
         <span>message</span>
         <textarea name="message" required rows={4} placeholder="enter message" />
       </label>
-      <button type="submit" className="btn" style={{ alignSelf: 'flex-start' }} disabled={sending}>
+      <button type="submit" className="btn contact-submit" disabled={sending}>
         {sending ? 'sending…' : 'send'}
       </button>
     </form>
