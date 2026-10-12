@@ -15,7 +15,7 @@ const Prompt = ({ heading, subtext, actions }: PromptProps) => {
           <p className="sub">{subtext}</p>
         </div>
         {actions ?? (
-          <Link className="btn" href="/contact">start a project</Link>
+          <Link className="btn" href="/start-a-project">start a project</Link>
         )}
       </div>
     </section>

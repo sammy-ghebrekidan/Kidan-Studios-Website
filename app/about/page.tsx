@@ -17,7 +17,6 @@ export default async function AboutPage() {
 
   // Fallback content when no Sanity data exists
   const skills = data?.skills ?? [
-    'Shopify Plus',
     'Shopify Liquid',
     'Dawn Theme',
     'React / Next.js',

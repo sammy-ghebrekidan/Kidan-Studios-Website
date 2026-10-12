@@ -16,6 +16,5 @@ export const tickerItems: TickerItem[] = [
   { icon: 'i-tag', label: 'independent retail', outline: true },
   { icon: 'i-box', label: 'dtc brands' },
   { icon: 'i-globe', label: 'uk & global', outline: true },
-  { icon: 'i-bolt', label: 'shopify plus' },
   { icon: 'i-spark', label: 'built in london', outline: true },
 ]

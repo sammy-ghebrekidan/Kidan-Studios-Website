@@ -6,7 +6,10 @@ const Footer = () => {
     <footer>
       <div className="wrap">
         <div className="footer-inner">
-          <span className="fmark">Kidan Studios</span>
+          <div className="footer-brand">
+            <span className="fmark">Kidan Studios</span>
+            <p className="fmeta">London, UK · hello@kidanstudios.co.uk</p>
+          </div>
           <nav className="footer-nav" aria-label="Footer navigation">
             <Link href="/">home</Link>
             {NAVIGATION.main.map((item) => (
@@ -14,7 +17,7 @@ const Footer = () => {
             ))}
             <Link href="/contact">contact</Link>
           </nav>
-          <span className="flegal">© 2026 Kidan Studios</span>
+          <span className="flegal">© 2026 Kidan Studios. All rights reserved.</span>
         </div>
       </div>
     </footer>

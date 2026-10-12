@@ -2,7 +2,6 @@ export const NAVIGATION = {
   main: [
     { label: 'work', href: '/work' },
     { label: 'services', href: '/services' },
-    { label: 'blog', href: '/blog' },
     { label: 'about', href: '/about' },
   ],
   social: [

@@ -1,18 +1,12 @@
 import Link from 'next/link'
 import { Ticker, WorkRow } from '@/components'
-import { client, homeContentQuery, projectsQuery, blogPostsQuery, urlFor } from '@/lib/sanity'
-import type { HomeContent, Project, BlogPost } from '@/lib/sanity'
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toLowerCase()
-}
+import { client, homeContentQuery, projectsQuery, urlFor } from '@/lib/sanity'
+import type { HomeContent, Project } from '@/lib/sanity'
 
 export default async function HomePage() {
-  const [homeContent, projects, posts] = await Promise.all([
+  const [homeContent, projects] = await Promise.all([
     client.fetch<HomeContent>(homeContentQuery),
     client.fetch<Project[]>(projectsQuery),
-    client.fetch<BlogPost[]>(blogPostsQuery),
   ])
 
   // Use fallback content if Sanity data isn't available yet
@@ -27,7 +21,7 @@ export default async function HomePage() {
 
   const trustBar = homeContent?.trustBar || [
     { icon: 'i-globe', label: 'based in', value: 'london, uk' },
-    { icon: 'i-store', label: 'works with', value: 'shopify & shopify plus' },
+    { icon: 'i-store', label: 'works with', value: 'shopify' },
     { icon: 'i-bolt', label: 'replies within', value: '24 hours' },
     { icon: 'i-box', label: 'typical build', value: '3–6 weeks' },
   ]
@@ -42,12 +36,6 @@ export default async function HomePage() {
     title: 'services',
     subtitle: 'three things, done properly — and priced before you commit.',
     cta: { label: 'see pricing', href: '/services' },
-  }
-
-  const blogSection = homeContent?.blogSection || {
-    title: 'blog',
-    subtitle: 'ideas for better shopify stores',
-    cta: { label: 'all articles', href: '/blog' },
   }
 
   const closingCta = homeContent?.closingCta || {
@@ -168,43 +156,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="wrap sec">
-        <div className="sechead" style={{ marginBottom: 'clamp(24px,2.8vw,38px)' }}>
-          <div className="txt">
-            <h2 className="h2">{blogSection.title}</h2>
-            <p className="lede-sm">{blogSection.subtitle}</p>
-          </div>
-          <Link className="btn ghost" href={blogSection.cta.href}>{blogSection.cta.label}</Link>
-        </div>
-        <div className="postlist">
-          {posts.map((post, i) => (
-            <Link key={post._id} className="prow" href={`/blog/${post.slug.current}`}>
-              <span className="pnum">{String(i + 1).padStart(2, '0')}</span>
-              <div className="ptxt">
-                <span className="pcat">{post.category.toLowerCase()} <em aria-hidden="true">·</em> {post.readTime} <em aria-hidden="true">·</em> {formatDate(post.publishedAt)}</span>
-                <h3 className="ptitle">{post.title}</h3>
-              </div>
-              <span className="psmall">
-                <img 
-                  width="400" 
-                  height="380" 
-                  decoding="async" 
-                  loading="lazy" 
-                  src={urlFor(post.image).width(400).height(380).url()} 
-                  alt="" 
-                />
-              </span>
-              <span className="parrow" aria-hidden="true">↗</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
       <section className="wrap sec" style={{ paddingBottom: 'clamp(64px,8vw,120px)', borderTop: '1px solid var(--line)' }}>
         <p className="eyebrow" style={{ marginBottom: '24px', color: 'var(--fg-3)' }}>next steps</p>
         <h2 className="h2" style={{ marginBottom: '32px', maxWidth: '18ch' }}>{closingCta.heading}</h2>
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <Link className="btn" href="/contact">get in touch</Link>
+          <Link className="btn" href="/start-a-project">get in touch</Link>
           <a className="btn ghost" href="mailto:hello@kidanstudios.co.uk">email direct</a>
         </div>
       </section>

@@ -5,8 +5,8 @@ import { client, projectsQuery, urlFor } from '@/lib/sanity'
 import type { Project as SanityProject } from '@/lib/sanity'
 
 export const metadata: Metadata = {
-  title: 'Work',
-  description: 'Shopify builds for brands that sell something they care about.',
+  title: 'Custom Shopify Builds',
+  description: 'Shopify theme builds for London e-commerce brands — custom Liquid, conversion-focused, built on clean code you own.',
 }
 
 // Map project slugs to their display names for the WorkRow component

@@ -22,7 +22,7 @@ export default async function ServicesPage() {
 
   const trustBar = data?.trustBar ?? [
     { label: 'based in', value: 'london, uk' },
-    { label: 'works with', value: 'shopify & shopify plus' },
+    { label: 'works with', value: 'shopify' },
     { label: 'you own', value: 'all the code' },
     { label: 'after launch', value: '30 days of support' },
   ]
@@ -124,7 +124,7 @@ export default async function ServicesPage() {
           <div className="txt">
             <h2 className="h2" id="services-title">services</h2>
           </div>
-          <Link className="btn" href="/contact">get in touch</Link>
+          <Link className="btn" href="/start-a-project">get in touch</Link>
         </div>
         <div className="tiers">
           {tiers.map((tier, i) => (
@@ -137,7 +137,7 @@ export default async function ServicesPage() {
                   <li key={j}>{feature}</li>
                 ))}
               </ul>
-              <Link className={`btn${tier.featured ? '' : ' ghost'}`} href={tier.ctaHref ?? '/contact'} style={{ marginTop: 'auto' }}>
+              <Link className={`btn${tier.featured ? '' : ' ghost'}`} href={tier.ctaHref ?? '/start-a-project'} style={{ marginTop: 'auto' }}>
                 {tier.ctaLabel}
               </Link>
             </article>
