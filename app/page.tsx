@@ -17,10 +17,9 @@ export default async function HomePage() {
 
   // Use fallback content if Sanity data isn't available yet
   const hero = homeContent?.hero || {
-    eyebrow: 'shopify studio · london',
+    eyebrow: 'shopify developer · london',
     title: 'Kidan\nStudios',
-    lede: 'London-based Shopify development studio specialising in custom Shopify themes and performance optimisation.',
-    status: 'available for new projects — august 2026',
+    lede: 'london-based shopify developer building custom themes, faster storefronts and higher-converting product pages.',
     cta: { label: 'start a project', href: '/contact' },
     ctaSecondary: { label: 'see the work', href: '/work' },
   }
@@ -70,15 +69,11 @@ export default async function HomePage() {
           <span className="grain"></span>
         </div>
         <section className="hero wrap">
-          <p className="eyebrow hero-eyebrow">{hero.eyebrow}</p>
-          <h1 className="h1">{hero.title.split('\n').map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}</h1>
+          <h1 className="eyebrow hero-eyebrow">{hero.eyebrow}</h1>
+          <p className="h1" aria-hidden="false">{hero.title.split('\n').map((line, i) => <span key={i}>{line}{i === 0 && <br />}</span>)}</p>
           <div className="hero-meta">
             <p className="lede">{hero.lede}</p>
             <div className="hero-side">
-              <span className="status">
-                <i></i>{hero.status}{' '}
-                <svg className="ic solid" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star4"/></svg>
-              </span>
               <div className="hero-ctas">
                 <Link className="btn" href={hero.cta.href}>{hero.cta.label}</Link>
                 <Link className="btn ghost" href={hero.ctaSecondary.href}>{hero.ctaSecondary.label}</Link>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Funnel_Sans, Inter_Tight } from 'next/font/google'
 import './globals.css'
-import { Header, Footer, Marquee, SvgSprite, GsapProvider } from '@/components'
+import { Header, Footer, Marquee, SvgSprite, GsapProvider, ThemeToggle } from '@/components'
 
 const funnelSans = Funnel_Sans({
   subsets: ['latin'],
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: '%s | Kidan Studios',
   },
   description:
-    'London-based Shopify development studio building custom themes, faster storefronts and higher-converting product pages for e-commerce brands.',
+    'London Shopify developer specialising in custom theme development, performance optimisation and higher-converting storefronts for e-commerce brands.',
   keywords: ['Shopify developer London', 'Shopify theme developer', 'custom Shopify themes', 'Shopify performance optimisation', 'e-commerce developer UK', 'Shopify CRO', 'Liquid developer'],
   authors: [{ name: 'Kidan Studios', url: 'https://kidanstudios.co.uk' }],
   creator: 'Kidan Studios',
@@ -49,15 +49,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${funnelSans.variable} ${interTight.variable}`}>
       <head>
+        {/* Anti-flash: read saved theme from localStorage before first paint */}
+        <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('kidan-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}` }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
-              '@type': 'ProfessionalService',
+              '@type': ['ProfessionalService', 'LocalBusiness'],
               name: 'Kidan Studios',
               description:
-                'Shopify development studio specialising in custom themes, performance optimisation and CRO.',
+                'London Shopify developer building custom themes, faster storefronts and higher-converting product pages for e-commerce brands.',
               url: 'https://kidanstudios.co.uk/',
               email: 'hello@kidanstudios.co.uk',
               address: { '@type': 'PostalAddress', addressLocality: 'London', addressCountry: 'GB' },
@@ -79,6 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </div>
         <GsapProvider />
+        <ThemeToggle />
       </body>
     </html>
   )

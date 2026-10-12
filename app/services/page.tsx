@@ -8,8 +8,8 @@ import type { ServicesContent } from '@/lib/sanity/types'
 export async function generateMetadata(): Promise<Metadata> {
   const data: ServicesContent | null = await client.fetch(servicesContentQuery)
   return {
-    title: data?.metaTitle ?? 'Services',
-    description: data?.metaDescription ?? 'Shopify web development services — store audits, builds, and ongoing support for e-commerce brands.',
+    title: data?.metaTitle ?? 'Shopify Development Services, London',
+    description: data?.metaDescription ?? 'Custom Shopify theme builds, store audits and ongoing development for London e-commerce brands. Transparent scope, clean Liquid, no lock-in.',
   }
 }
 
@@ -93,10 +93,8 @@ export default async function ServicesPage() {
   const faqHeading = data?.faqHeading ?? 'questions'
   const faqLede = data?.faqLede ?? 'the things brands ask before getting in touch.'
   const faqs = data?.faqs ?? [
-    { question: 'do you work with shopify plus?', answer: 'Yes. Plus builds usually involve more app integration and checkout extensibility work, so they\'re scoped individually — but the process and the transparent approach are the same.' },
     { question: 'can you work with my existing theme?', answer: "Usually. If the theme is well-built, customising it is faster and cheaper than starting over. If it's been through several developers and the code is fighting itself, I'll tell you that honestly — a rebuild sometimes costs less than untangling it." },
     { question: 'who owns the code?', answer: "You do. Everything is built in your Shopify admin on a theme you own, with no proprietary frameworks or licences tied to me. You can hand it to another developer at any point." },
-    { question: 'how do payments work?', answer: 'Payment structure is agreed as part of scoping. Get in touch and we can discuss what works for your project.' },
     { question: 'what do you need from me to start?', answer: "Store access, your brand assets, and someone who can make decisions. The less time a project spends waiting on approvals, the cheaper it gets for you." },
   ]
 

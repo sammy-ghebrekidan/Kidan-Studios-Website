@@ -7,8 +7,8 @@ import type { ContactContent } from '@/lib/sanity/types'
 export async function generateMetadata(): Promise<Metadata> {
   const data: ContactContent | null = await client.fetch(contactContentQuery)
   return {
-    title: data?.metaTitle ?? 'Contact',
-    description: data?.metaDescription ?? 'Start a project with Kidan Studios. A few quick questions, about two minutes.',
+    title: data?.metaTitle ?? 'Start a Project',
+    description: data?.metaDescription ?? 'Get a quote from a London Shopify developer. Describe your project — a few quick questions, about two minutes, reply within 24 hours.',
   }
 }
 
