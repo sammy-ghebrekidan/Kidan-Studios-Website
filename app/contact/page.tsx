@@ -10,22 +10,19 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <main>
-      <section className="wrap pagehead-lg">
-        <div className="contact-head">
-          <div>
+      <section className="wrap sec pagehead-lg">
+        <div className="contact-layout">
+          <div className="contact-info">
             <h1 className="h1">say hello</h1>
-            <p className="lede-sm" style={{ marginTop: 'clamp(20px,2.4vw,32px)', maxWidth: '38ch' }}>
+            <p className="lede-sm" style={{ marginTop: 'clamp(16px,2vw,28px)', maxWidth: '36ch' }}>
               general enquiries and introductions welcome.
             </p>
+            <a href="mailto:hello@kidanstudios.co.uk" className="femail" style={{ marginTop: 'clamp(24px,3vw,40px)', display: 'block' }}>
+              hello@kidanstudios.co.uk
+            </a>
           </div>
-          <a href="mailto:hello@kidanstudios.co.uk" className="femail">
-            hello@kidanstudios.co.uk
-          </a>
+          <SimpleContactForm />
         </div>
-      </section>
-
-      <section className="wrap sec pt0" style={{ paddingBottom: 'clamp(46px,5vw,80px)' }}>
-        <SimpleContactForm />
       </section>
 
       <Prompt

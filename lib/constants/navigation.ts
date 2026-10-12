@@ -3,6 +3,7 @@ export const NAVIGATION = {
     { label: 'work', href: '/work' },
     { label: 'services', href: '/services' },
     { label: 'about', href: '/about' },
+    { label: 'contact', href: '/contact' },
   ],
   social: [
     { label: 'linkedin', href: 'https://linkedin.com' },
