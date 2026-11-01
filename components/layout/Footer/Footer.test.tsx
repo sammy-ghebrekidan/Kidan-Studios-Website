@@ -13,6 +13,7 @@ describe('Footer', () => {
     expect(screen.getByText('home')).toBeInTheDocument()
     expect(screen.getByText('work')).toBeInTheDocument()
     expect(screen.getByText('contact')).toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: 'contact' })).toHaveLength(1)
   })
 
   it('renders the wordmark', () => {

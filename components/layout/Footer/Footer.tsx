@@ -15,7 +15,6 @@ const Footer = () => {
             {NAVIGATION.main.map((item) => (
               <Link key={item.href} href={item.href}>{item.label}</Link>
             ))}
-            <Link href="/contact">contact</Link>
           </nav>
           <span className="flegal">© 2026 Kidan Studios. All rights reserved.</span>
         </div>
